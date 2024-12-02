@@ -1,10 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Metadata.Ecma335;
-using System.Threading;
-using System.Threading.Tasks;
-using CalkaRownolegleKG.Funkcje;
+﻿using CalkaRownolegleKG.Funkcje;
 using CalkaRownolegleKG.Interfejsy;
 using CalkaRownolegleKG.Kalkulatory;
 
@@ -17,11 +11,11 @@ namespace CalkaRownolegleKG
             while (true)
             {
 
-                Console.WriteLine("\n\n===== Wybierz funkcję =====\n");
-                Console.WriteLine("\t1. Funkcja y=2x + 2x^2 ");
-                Console.WriteLine("\t2. Funkcja y=2x^2 +3 ");
-                Console.WriteLine("\t3. Funkcja y=3x^2 + 2x - 3");
-                Console.WriteLine("\t0. Wyjście");
+                Console.WriteLine("===== Wybierz funkcję =====\n");
+                Console.WriteLine("1. Funkcja y= 2x + 2x^2 ");
+                Console.WriteLine("2. Funkcja y= 2x^2 +3 ");
+                Console.WriteLine("3. Funkcja y= 3x^2 + 2x - 3");
+                Console.WriteLine("0. Wyjście");
 
                 Console.Write("\nWybierz opcję: ");
                 string choice = Console.ReadLine();
@@ -37,12 +31,14 @@ namespace CalkaRownolegleKG
                     "1" => new Funkcja1(),
                     "2" => new Funkcja2(),
                     "3" => new Funkcja3(),
+                     _  => throw new Exception("Zly wybor")
+
                 };
 
                 ParametryDoCalki parametry = new ParametryDoCalki();
                 Console.WriteLine("\nPodaj ilość podziałów [ile całek chcesz obliczyć]: ");
                 //parametry.podzialy = int.Parse(Console.ReadLine());
-                parametry.podzialy = 3;
+                parametry.podzialy = 4;
                 for (int i = 0; i < parametry.podzialy; i++)
                 {
                     Console.WriteLine($"\nPodaj zakresy {i + 1} (format: [Początek całkowania,Koniec całkowania]  )");
@@ -56,19 +52,23 @@ namespace CalkaRownolegleKG
 
                 KalkulatorTrapez kalkulatorTra = new KalkulatorTrapez();
                 List<(int, double)> wynikicalek = kalkulatorTra.metodaTrapezow(parametry, funkcja);
-
+                wynikicalek.Sort();
                 Console.WriteLine("\nPodsumowanie:");
                 Console.WriteLine($"Funkcja: {funkcja.GetType().Name}");
-                for (int i = 0; i < parametry.ZakresyCalki.Count; i++) { 
+                for (int i = 0; i < parametry.ZakresyCalki.Count; i++)
+                {
 
-                    Console.WriteLine($"Przedział{i+1}: {parametry.ZakresyCalki[i]}");
+                    Console.WriteLine($"Przedział{i + 1}: {parametry.ZakresyCalki[i]}");
                 }
                 foreach (var wynik in wynikicalek)
                 {
-                    
+
                     Console.WriteLine($"Całka#{wynik.Item1}=== {wynik.Item2}");
                 }
                 Console.WriteLine($"Suma wynikow: {wynikicalek.Sum(WynikSumy => WynikSumy.Item2)}");
+                Console.WriteLine("Nacisnij przycisk zeby kontynuowac");
+                Console.ReadKey();
+                Console.Clear();
 
             }
         }
