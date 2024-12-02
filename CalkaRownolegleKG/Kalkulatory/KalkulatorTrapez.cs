@@ -1,4 +1,5 @@
-﻿using System;
+using System;
+using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -9,10 +10,10 @@ namespace CalkaRownolegleKG.Kalkulatory
 {
     public class KalkulatorTrapez
     {
-        public List<double> Wyniki { get; private set; } = new List<double>();
-        public double metodaTrapezow(ParametryDoCalki parametry, IFunkcja funkcja)
+        
+        public List<(int, double)> metodaTrapezow(ParametryDoCalki parametry, IFunkcja funkcja)
         {
-            int[] indexcalki;
+            var wyniki = new ConcurrentBag<(int, double)>();
             double wynikCalkowania = 0;
             Parallel.For(0, parametry.podzialy, i =>
             {
@@ -32,11 +33,12 @@ namespace CalkaRownolegleKG.Kalkulatory
 
                     poleTrapezow += ((y1 + y2) * szerokoscTrapezu) / 2;
                 }
-                Console.WriteLine($"Numer całki#{i + 1}= " + poleTrapezow + "\n");
-                wynikCalkowania = (poleTrapezow);
+                //Console.WriteLine($"Numer całki#{i + 1}= " + poleTrapezow + "\n");
+                //wynikCalkowania = (poleTrapezow);
+                wyniki.Add((i+1, poleTrapezow));
             });
-            return wynikCalkowania;
-
+            //return wynikCalkowania;
+            return wyniki.ToList();
         }
     }
 }
