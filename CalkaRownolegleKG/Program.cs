@@ -51,10 +51,11 @@ namespace CalkaRownolegleKG
                     parametry.ZakresyCalki.Add(new Tuple<int, int>(x, y));
                 }
 
-                KalkulatorTrapez kalkulatorTra = new KalkulatorTrapez();
-                kalkulatorTra.metodaTrapezow(parametry, funkcja);
-                
-
+                List<(int,double)> wynikicalek = kalkulatorTra.metodaTrapezow(parametry, funkcja);
+                foreach(var wynik in wynikicalek)
+                {
+                    Console.WriteLine($"Całka#{wynik.Item1}=== {wynik.Item2}");
+                }
             }
         }
     }
