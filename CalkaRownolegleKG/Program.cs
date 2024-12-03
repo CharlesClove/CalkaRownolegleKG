@@ -38,7 +38,7 @@ namespace CalkaRownolegleKG
                 ParametryDoCalki parametry = new ParametryDoCalki();
                 Console.WriteLine("\nPodaj ilość podziałów [ile całek chcesz obliczyć]: ");
                 //parametry.podzialy = int.Parse(Console.ReadLine());
-                parametry.podzialy = 4;
+                parametry.podzialy = 1;
                 for (int i = 0; i < parametry.podzialy; i++)
                 {
                     Console.WriteLine($"\nPodaj zakresy {i + 1} (format: [Początek całkowania,Koniec całkowania]  )");
@@ -51,25 +51,29 @@ namespace CalkaRownolegleKG
                 }
 
                 KalkulatorTrapez kalkulatorTra = new KalkulatorTrapez();
-                List<(int, double)> wynikicalek = kalkulatorTra.metodaTrapezow(parametry, funkcja);
-                wynikicalek.Sort();
-                Console.WriteLine("\nPodsumowanie:");
-                Console.WriteLine($"Funkcja: {funkcja.GetType().Name}");
-                for (int i = 0; i < parametry.ZakresyCalki.Count; i++)
+                var (wynikicalek, przerwano) = kalkulatorTra.metodaTrapezow(parametry, funkcja);
+                if (!przerwano)
                 {
 
-                    Console.WriteLine($"Przedział{i + 1}: {parametry.ZakresyCalki[i]}");
-                }
-                foreach (var wynik in wynikicalek)
-                {
+                    wynikicalek.Sort();
+                    Console.WriteLine("\nPodsumowanie:");
+                    Console.WriteLine($"Funkcja: {funkcja.GetType().Name}");
+                    for (int i = 0; i < parametry.ZakresyCalki.Count; i++)
+                    {
 
-                    Console.WriteLine($"Całka#{wynik.Item1}=== {wynik.Item2}");
+                        Console.WriteLine($"Przedział{i + 1}: {parametry.ZakresyCalki[i]}");
+                    }
+                    foreach (var wynik in wynikicalek)
+                    {
+
+                        Console.WriteLine($"Całka#{wynik.Item1}=== {wynik.Item2}");
+                    }
+                    Console.WriteLine($"Suma wynikow: {wynikicalek.Sum(WynikSumy => WynikSumy.Item2)}");
+                    Console.WriteLine("Nacisnij przycisk zeby kontynuowac");
+                    Console.ReadKey();
+                    Console.Clear();
                 }
-                Console.WriteLine($"Suma wynikow: {wynikicalek.Sum(WynikSumy => WynikSumy.Item2)}");
-                Console.WriteLine("Nacisnij przycisk zeby kontynuowac");
-                Console.ReadKey();
                 Console.Clear();
-
             }
         }
     }
