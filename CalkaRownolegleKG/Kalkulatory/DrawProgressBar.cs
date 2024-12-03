@@ -11,7 +11,7 @@
         }
         public void DrawProgress(int current, int total)
         {
-            int progressWidth = 20;
+            int progressWidth = 50;
             int filledWidth = (int)((double)current / total * progressWidth);
             lock (Console.Out)
             {
@@ -20,7 +20,7 @@
                 Console.Write(new string('#', filledWidth));
                 Console.Write(new string(' ', progressWidth - filledWidth));
                 Console.Write($"] {current}/{total}");
-                //Thread.Sleep(2);
+                //Thread.Sleep(1);
 
             }
 
