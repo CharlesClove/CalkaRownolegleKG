@@ -23,7 +23,7 @@ namespace CalkaRownolegleKG.Funkcje
                 return menu_instance;
             }
         }
-        public string ShowMenu() //main menu apki
+        public void ShowMenu() //main menu apki
         {
 
             Console.WriteLine("===== Wybierz funkcję =====\n");
@@ -34,8 +34,9 @@ namespace CalkaRownolegleKG.Funkcje
             Console.WriteLine("0. Wyjście");
 
             Console.Write("\nWybierz opcję: ");
-            return Console.ReadLine();
+            
         }
+        public string MenuChoice() { return Console.ReadLine(); }
         public void ChoicePass(string choice) // funkcja podająca wybor z showMenu i wybierająca odpowiednia funkcje
         {
             if (choice == "0")
@@ -49,7 +50,8 @@ namespace CalkaRownolegleKG.Funkcje
                 "2" => new Funkcja2(),
                 "3" => new Funkcja3(),
                 "4" => new Funkcja4(),
-                _ => throw new Exception("Zly wybor")
+                _ => throw new Exception("Zly wybor") 
+
 
             };
         }

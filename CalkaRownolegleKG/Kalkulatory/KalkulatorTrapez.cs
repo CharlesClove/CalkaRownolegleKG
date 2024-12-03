@@ -6,23 +6,29 @@ namespace CalkaRownolegleKG.Kalkulatory
     public class KalkulatorTrapez
     {
         private readonly StopLoop _stopLoop;
-        public KalkulatorTrapez() { _stopLoop = new StopLoop(); }                   //tworze instancje stooploop
+        public KalkulatorTrapez() { _stopLoop = new StopLoop(); } 
+        //tworze instancje stooploop
+        private static bool _isCancelled = false;
         public (List<(int, double)>, bool) metodaTrapezow(ParametryDoCalki parametry, IFunkcja funkcja)
         {
             _stopLoop.Reset();
             var wyniki = new ConcurrentBag<(int, double)>();                                    //uzywam bag zeby zebrac wyniki jakie da mi  calka z parallel.for
-            Console.WriteLine("\n\tNacisnij klawisz q aby przerwac");
-
+            
+            bool runningParallel = true;
             Task.Run(() => 
-                { while (true)
+                { while (runningParallel)
                     {
                         if (Console.ReadKey(true).Key == ConsoleKey.Q)
-                        { _stopLoop.Stop(); break; }
+                        {
+                            _stopLoop.Stop(); 
+                            runningParallel = false; 
+                        }
                     }
                 }
             );
             try
             {
+                
                 Parallel.For(0, parametry.podzialy,new ParallelOptions { CancellationToken = _stopLoop.Token}  , i =>
                 {
                     ProgressBar progressBar = new ProgressBar(i, parametry.podzialy);
@@ -33,6 +39,7 @@ namespace CalkaRownolegleKG.Kalkulatory
                     int iloscPrzedzialow = 10000;
                     double szerokoscTrapezu = (double)(koniec - poczatek) / iloscPrzedzialow;
                     double poleTrapezow = 0;
+                    
 
                     for (int j = 0; j < iloscPrzedzialow; j++)
                     {
@@ -45,6 +52,7 @@ namespace CalkaRownolegleKG.Kalkulatory
                         poleTrapezow += ((y1 + y2) * szerokoscTrapezu) / 2;
 
                         progressBar.DrawProgress(j, iloscPrzedzialow);
+                        
 
                     }
                     //Console.WriteLine($"Numer całki#{i + 1}= " + poleTrapezow + "\n");
@@ -52,6 +60,7 @@ namespace CalkaRownolegleKG.Kalkulatory
 
                     wyniki.Add((i + 1, poleTrapezow));
                 });
+                
 
             }
             catch (OperationCanceledException) 
@@ -61,6 +70,10 @@ namespace CalkaRownolegleKG.Kalkulatory
                 Console.ReadKey();
                 return (new List<(int, double)>(), true);
 
+            }
+            finally
+            {
+                runningParallel = false;
             }
 
             Console.Clear();

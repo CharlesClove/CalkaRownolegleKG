@@ -11,7 +11,8 @@ namespace CalkaRownolegleKG
         {
             while (true)
             {
-                string choice = Menu.MenuInstance.ShowMenu();
+                Menu.MenuInstance.ShowMenu();
+                string choice = Menu.MenuInstance.MenuChoice();
                 Menu.MenuInstance.ChoicePass(choice);
                 ZbiorParametrow.ZbiorInstance.ZbierzParametry();
 

@@ -29,6 +29,7 @@ namespace CalkaRownolegleKG.Funkcje
         }
         public void ZbierzParametry()
         {
+            parametry.ZakresyCalki.Clear();
             Console.WriteLine("\nPodaj ilość podziałów [ile całek chcesz obliczyć]: ");
             //parametry.podzialy = int.Parse(Console.ReadLine());
             parametry.podzialy = 3

@@ -28,7 +28,10 @@ namespace CalkaRownolegleKG.Funkcje
 
         public (List<(int, double)>, bool) ParallelForKal(ParametryDoCalki parametry, IFunkcja funkcja) // kalkulator parallel for 
         {
-            var(wynikicalek, przerwano) = KalTra.metodaTrapezow(parametry, funkcja);
+            Console.Write("Naciśnij Q, żeby anulować");
+            Thread.Sleep(1000);
+
+            var (wynikicalek, przerwano) = KalTra.metodaTrapezow(parametry, funkcja);
             wyniki = (wynikicalek, przerwano);
             return (wynikicalek,przerwano);
         }

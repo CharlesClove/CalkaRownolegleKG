@@ -8,7 +8,8 @@ namespace CalkaRownolegleKG.Interfejsy
 {
     public interface IMenu
     {
-        string ShowMenu();
+        void ShowMenu();
+        string MenuChoice();
         void ChoicePass(string choice);
     }
 }
