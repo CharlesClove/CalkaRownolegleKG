@@ -10,11 +10,11 @@ namespace CalkaRownolegleKG.Funkcje
 {
     public class Kalkulator : IKalkulator
     {
-        private static Kalkulator kal_instance;
-        private KalkulatorTrapez KalTra = new KalkulatorTrapez();
+        private static Kalkulator kal_instance; // instancja kal
+        private KalkulatorTrapez KalTra = new KalkulatorTrapez();// utworzenie Kalkulatoratrapeza parallelfor
 
-        private (List<(int, double)>, bool) wyniki;
-        public static Kalkulator KalInstance
+        private (List<(int, double)>, bool) wyniki; // lista do zwracancyh wynikow
+        public static Kalkulator KalInstance // tworzenie instancji kalkulator
         {
             get
             {
@@ -26,7 +26,7 @@ namespace CalkaRownolegleKG.Funkcje
             }
         }
 
-        public (List<(int, double)>, bool) ParallelForKal(ParametryDoCalki parametry, IFunkcja funkcja) 
+        public (List<(int, double)>, bool) ParallelForKal(ParametryDoCalki parametry, IFunkcja funkcja) // kalkulator parallel for 
         {
             var(wynikicalek, przerwano) = KalTra.metodaTrapezow(parametry, funkcja);
             wyniki = (wynikicalek, przerwano);
@@ -35,7 +35,7 @@ namespace CalkaRownolegleKG.Funkcje
         public void ThreadKal() { }
         public void ThreadPoolKal() { }
 
-        public void Podsumowanie() 
+        public void Podsumowanie() // wyswietla podsumowanie obliczen
         {
             var wynikicalek = wyniki.Item1;
             var przerwano = wyniki.Item2;

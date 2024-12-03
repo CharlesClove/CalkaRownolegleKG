@@ -9,10 +9,10 @@ namespace CalkaRownolegleKG.Funkcje
 {
     public class Menu : IMenu
     {
-        private static Menu menu_instance;
+        private static Menu menu_instance; //tworze instancje menu 
         private IFunkcja funkcja;
         private Menu() {}
-        public static Menu MenuInstance
+        public static Menu MenuInstance // wywołuje instancje aby nie podawac obiektu, tylko stworzyl sie tutaj
         {
             get
             {
@@ -23,7 +23,7 @@ namespace CalkaRownolegleKG.Funkcje
                 return menu_instance;
             }
         }
-        public string ShowMenu()
+        public string ShowMenu() //main menu apki
         {
 
             Console.WriteLine("===== Wybierz funkcję =====\n");
@@ -36,7 +36,7 @@ namespace CalkaRownolegleKG.Funkcje
             Console.Write("\nWybierz opcję: ");
             return Console.ReadLine();
         }
-        public void ChoicePass(string choice) 
+        public void ChoicePass(string choice) // funkcja podająca wybor z showMenu i wybierająca odpowiednia funkcje
         {
             if (choice == "0")
             {
@@ -53,7 +53,7 @@ namespace CalkaRownolegleKG.Funkcje
 
             };
         }
-        public IFunkcja GetFunkcja()
+        public IFunkcja GetFunkcja() // zwraca funkcje wybrana w choicePass
         {
             return funkcja;
         }
