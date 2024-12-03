@@ -9,8 +9,8 @@ namespace CalkaRownolegleKG.Kalkulatory
         public KalkulatorTrapez() { _stopLoop = new StopLoop(); }                   //tworze instancje stooploop
         public (List<(int, double)>, bool) metodaTrapezow(ParametryDoCalki parametry, IFunkcja funkcja)
         {
+            _stopLoop.Reset();
             var wyniki = new ConcurrentBag<(int, double)>();                                    //uzywam bag zeby zebrac wyniki jakie da mi  calka z parallel.for
-
             Console.WriteLine("\n\tNacisnij klawisz q aby przerwac");
 
             Task.Run(() => 

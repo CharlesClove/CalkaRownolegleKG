@@ -15,5 +15,14 @@ namespace CalkaRownolegleKG.Kalkulatory
         }
         public CancellationToken Token { get { return _cts.Token; } }
         public void Stop() { _cts.Cancel(); }
+
+        public void Reset()
+        {
+            if(_cts.IsCancellationRequested)
+            {
+                _cts.Dispose();
+                _cts = new CancellationTokenSource();
+            }
+        }
     }
 }

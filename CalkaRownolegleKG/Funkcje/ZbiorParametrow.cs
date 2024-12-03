@@ -31,7 +31,8 @@ namespace CalkaRownolegleKG.Funkcje
         {
             Console.WriteLine("\nPodaj ilość podziałów [ile całek chcesz obliczyć]: ");
             //parametry.podzialy = int.Parse(Console.ReadLine());
-            parametry.podzialy = 1;
+            parametry.podzialy = 3
+                ;
             for (int i = 0; i < parametry.podzialy; i++)
             {
                 Console.WriteLine($"\nPodaj zakresy {i + 1} (format: [Początek całkowania,Koniec całkowania]  )");
