@@ -10,54 +10,45 @@ namespace CalkaRownolegleKG.Funkcje
     public class Menu : IMenu
     {
         private static Menu menu_instance; //tworze instancje menu 
-        private IFunkcja funkcja;
         private Menu() {}
+        private static readonly object lockObj = new object();
+
         public static Menu MenuInstance // wywołuje instancje aby nie podawac obiektu, tylko stworzyl sie tutaj
         {
             get
             {
                 if(menu_instance == null)
                 {
-                    menu_instance = new Menu();
+                    lock (lockObj)
+                    {
+                        if (menu_instance == null)
+                        {
+                            menu_instance = new Menu();
+                        }
+                    }
                 }
                 return menu_instance;
             }
         }
+        private readonly List<string> opcjeMenu = new()
+        {
+            "1. Funkcja y= 2x + 2x^2 ",
+            "2. Funkcja y= 2x^2 +3 ",
+            "3. Funkcja y= 3x^2 + 2x - 3",
+            "4. Funkcja y=3 * Math.Pow(x, 5) + 2 * x - 3 \t[Nowo dodana]",
+            "0. Wyjście"
+        };
         public void ShowMenu() //main menu apki
         {
-
-            Console.WriteLine("===== Wybierz funkcję =====\n");
-            Console.WriteLine("1. Funkcja y= 2x + 2x^2 ");
-            Console.WriteLine("2. Funkcja y= 2x^2 +3 ");
-            Console.WriteLine("3. Funkcja y= 3x^2 + 2x - 3");
-            Console.WriteLine("4. Funkcja y=3 * Math.Pow(x, 5) + 2 * x - 3 \t[Nowo dodana]");
-            Console.WriteLine("0. Wyjście");
-
-            Console.Write("\nWybierz opcję: ");
+            Console.WriteLine("===== Wybierz funkcję =====");
+            foreach (var opcjaMenu in opcjeMenu)
+            {
+                Console.WriteLine(opcjaMenu);
+            }
+            Console.WriteLine("Wybierz Funkcje:");
             
         }
         public string MenuChoice() { return Console.ReadLine(); }
-        public void ChoicePass(string choice) // funkcja podająca wybor z showMenu i wybierająca odpowiednia funkcje
-        {
-            if (choice == "0")
-            {
-                Environment.Exit(0);
-            }
-
-            funkcja = choice switch
-            {
-                "1" => new Funkcja1(),
-                "2" => new Funkcja2(),
-                "3" => new Funkcja3(),
-                "4" => new Funkcja4(),
-                _ => throw new Exception("Zly wybor") 
-
-
-            };
-        }
-        public IFunkcja GetFunkcja() // zwraca funkcje wybrana w choicePass
-        {
-            return funkcja;
-        }
+       
     }
 }

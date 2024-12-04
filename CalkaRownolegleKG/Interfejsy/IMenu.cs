@@ -10,6 +10,6 @@ namespace CalkaRownolegleKG.Interfejsy
     {
         void ShowMenu();
         string MenuChoice();
-        void ChoicePass(string choice);
+        
     }
 }

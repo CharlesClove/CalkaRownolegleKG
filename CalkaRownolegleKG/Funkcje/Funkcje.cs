@@ -18,4 +18,5 @@ namespace CalkaRownolegleKG.Funkcje
     {
         double IFunkcja.ObliczX(double x) => 3 * Math.Pow(x, 5) + 2 * x - 3;
     }
+
 }

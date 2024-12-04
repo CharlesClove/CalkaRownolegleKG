@@ -10,17 +10,24 @@ namespace CalkaRownolegleKG.Funkcje
 {
     public class Kalkulator : IKalkulator
     {
-        private static Kalkulator kal_instance; // instancja kal
         private KalkulatorTrapez KalTra = new KalkulatorTrapez();// utworzenie Kalkulatoratrapeza parallelfor
 
+        private static Kalkulator kal_instance; // instancja kal
         private (List<(int, double)>, bool) wyniki; // lista do zwracancyh wynikow
+        private static readonly object lockObj = new object();
         public static Kalkulator KalInstance // tworzenie instancji kalkulator
         {
             get
             {
-                if (kal_instance == null)
+                if(kal_instance == null)
                 {
-                    kal_instance = new Kalkulator();
+                    lock (lockObj)
+                    {
+                        if (kal_instance == null)
+                        {
+                            kal_instance = new Kalkulator();
+                        }
+                    }
                 }
                 return kal_instance;
             }
@@ -31,7 +38,7 @@ namespace CalkaRownolegleKG.Funkcje
             Console.Write("Naciśnij Q, żeby anulować");
             Thread.Sleep(1000);
 
-            var (wynikicalek, przerwano) = KalTra.metodaTrapezow(parametry, funkcja);
+            var (wynikicalek, przerwano) = KalTra.metodaTrapezow(parametry, FunkcjaFactory.FactoryInstance.WybranaFunkcja);
             wyniki = (wynikicalek, przerwano);
             return (wynikicalek,przerwano);
         }
@@ -48,7 +55,7 @@ namespace CalkaRownolegleKG.Funkcje
 
                 wynikicalek.Sort();
                 Console.WriteLine("\nPodsumowanie:");
-                Console.WriteLine($"Funkcja: {Menu.MenuInstance.GetFunkcja().GetType().Name}");
+                Console.WriteLine($"Funkcja: {FunkcjaFactory.FactoryInstance.FunkcjaName}");
                 for (int i = 0; i < ZbiorParametrow.ZbiorInstance.GetParametry().ZakresyCalki.Count; i++)
                 {
 

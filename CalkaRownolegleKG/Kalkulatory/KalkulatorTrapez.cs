@@ -1,4 +1,5 @@
 using System.Collections.Concurrent;
+using CalkaRownolegleKG.Funkcje;
 using CalkaRownolegleKG.Interfejsy;
 
 namespace CalkaRownolegleKG.Kalkulatory
@@ -9,8 +10,12 @@ namespace CalkaRownolegleKG.Kalkulatory
         public KalkulatorTrapez() { _stopLoop = new StopLoop(); } 
         //tworze instancje stooploop
         private static bool _isCancelled = false;
-        public (List<(int, double)>, bool) metodaTrapezow(ParametryDoCalki parametry, IFunkcja funkcja)
+        public (List<(int, double)>, bool) metodaTrapezow(ParametryDoCalki parametry, IFunkcja funkcja )
         {
+            if (FunkcjaFactory.FactoryInstance.WybranaFunkcja == null)
+            {
+                throw new InvalidOperationException("Wybrana funkcja nie została zainicjalizowana.");
+            }
             _stopLoop.Reset();
             var wyniki = new ConcurrentBag<(int, double)>();                                    //uzywam bag zeby zebrac wyniki jakie da mi  calka z parallel.for
             
@@ -39,6 +44,7 @@ namespace CalkaRownolegleKG.Kalkulatory
                     int iloscPrzedzialow = 10000;
                     double szerokoscTrapezu = (double)(koniec - poczatek) / iloscPrzedzialow;
                     double poleTrapezow = 0;
+
                     
 
                     for (int j = 0; j < iloscPrzedzialow; j++)

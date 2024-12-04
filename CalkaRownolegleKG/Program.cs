@@ -13,12 +13,11 @@ namespace CalkaRownolegleKG
             {
                 Menu.MenuInstance.ShowMenu();
                 string choice = Menu.MenuInstance.MenuChoice();
-                Menu.MenuInstance.ChoicePass(choice);
+                FunkcjaFactory.FactoryInstance.ChoicePass(choice);
                 ZbiorParametrow.ZbiorInstance.ZbierzParametry();
 
                 Kalkulator.KalInstance.ParallelForKal(
-                    ZbiorParametrow.ZbiorInstance.GetParametry(),
-                    Menu.MenuInstance.GetFunkcja());
+                    ZbiorParametrow.ZbiorInstance.GetParametry(),FunkcjaFactory.FactoryInstance.WybranaFunkcja);
 
                 Kalkulator.KalInstance.Podsumowanie();
 

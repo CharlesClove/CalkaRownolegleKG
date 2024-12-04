@@ -15,14 +15,20 @@ namespace CalkaRownolegleKG.Funkcje
         {
             parametry = new ParametryDoCalki();
         }
-        
+        private static readonly object lockObj = new object();
         public static ZbiorParametrow ZbiorInstance
         {
             get
             {
                 if(zbiorParametrow_instance == null)
                 {
-                    zbiorParametrow_instance = new ZbiorParametrow();
+                    lock (lockObj)
+                    {
+                        if (zbiorParametrow_instance == null)
+                        {
+                            zbiorParametrow_instance = new ZbiorParametrow();
+                        }
+                    }
                 }
                 return zbiorParametrow_instance;
             }
