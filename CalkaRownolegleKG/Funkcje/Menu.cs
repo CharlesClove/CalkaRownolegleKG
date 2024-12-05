@@ -38,6 +38,7 @@ namespace CalkaRownolegleKG.Funkcje
             "4. Funkcja y=3 * Math.Pow(x, 5) + 2 * x - 3 \t[Nowo dodana]",
             "0. Wyjście"
         };
+        
         public void ShowMenu() //main menu apki
         {
             Console.WriteLine("===== Wybierz funkcję =====");
@@ -45,10 +46,28 @@ namespace CalkaRownolegleKG.Funkcje
             {
                 Console.WriteLine(opcjaMenu);
             }
-            Console.WriteLine("Wybierz Funkcje:");
+            Console.WriteLine("Funkcja:");
             
         }
         public string MenuChoice() { return Console.ReadLine(); }
-       
+
+        private readonly List<string> opcjeMetod = new()
+        {
+            "1. Parallel",
+            "2. Thread",
+            "3. ThreadPool",
+            "0. Wyjście"
+        };
+        public void ShowMethod() 
+        {
+            Console.WriteLine("===== Wybierz metode =====");
+            foreach (var opcjaMetody in opcjeMetod)
+            {
+                Console.WriteLine(opcjaMetody);
+            }
+            Console.WriteLine("Metoda:");
+
+        }
+        public string metodaChoice() => Console.ReadLine();
     }
 }

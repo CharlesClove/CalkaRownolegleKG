@@ -9,9 +9,8 @@ namespace CalkaRownolegleKG.Interfejsy
 {
     public interface IKalkulator
     {
-        (List<(int, double)>, bool) ParallelForKal(ParametryDoCalki parametry, IFunkcja funkcja);
-        void ThreadKal();
-        void ThreadPoolKal();
+        (List<(int, double)>, bool) ObliczCalke(string metoda, ParametryDoCalki parametry, IFunkcja funkcja);
+        
 
         void Podsumowanie();
     }

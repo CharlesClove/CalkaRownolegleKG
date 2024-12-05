@@ -11,15 +11,17 @@ namespace CalkaRownolegleKG
         {
             while (true)
             {
+                IKalkulator kalkulator = new Kalkulator();
+                Menu.MenuInstance.ShowMethod();
+                string metoda = Menu.MenuInstance.metodaChoice();
                 Menu.MenuInstance.ShowMenu();
                 string choice = Menu.MenuInstance.MenuChoice();
                 FunkcjaFactory.FactoryInstance.ChoicePass(choice);
                 ZbiorParametrow.ZbiorInstance.ZbierzParametry();
+                kalkulator.ObliczCalke(metoda, ZbiorParametrow.ZbiorInstance.GetParametry(), FunkcjaFactory.FactoryInstance.WybranaFunkcja);
+                kalkulator.Podsumowanie();
 
-                Kalkulator.KalInstance.ParallelForKal(
-                    ZbiorParametrow.ZbiorInstance.GetParametry(),FunkcjaFactory.FactoryInstance.WybranaFunkcja);
-
-                Kalkulator.KalInstance.Podsumowanie();
+                
 
                 //Console.WriteLine("===== Wybierz funkcję =====\n");
                 //Console.WriteLine("1. Funkcja y= 2x + 2x^2 ");

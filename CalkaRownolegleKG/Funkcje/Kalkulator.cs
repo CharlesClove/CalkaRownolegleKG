@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection.Metadata.Ecma335;
 using System.Text;
 using System.Threading.Tasks;
 using CalkaRownolegleKG.Interfejsy;
@@ -10,40 +11,25 @@ namespace CalkaRownolegleKG.Funkcje
 {
     public class Kalkulator : IKalkulator
     {
-        private KalkulatorTrapez KalTra = new KalkulatorTrapez();// utworzenie Kalkulatoratrapeza parallelfor
-
-        private static Kalkulator kal_instance; // instancja kal
+        private readonly KalkulatorFactory kal_factory;
         private (List<(int, double)>, bool) wyniki; // lista do zwracancyh wynikow
-        private static readonly object lockObj = new object();
-        public static Kalkulator KalInstance // tworzenie instancji kalkulator
+        
+        public Kalkulator()
         {
-            get
-            {
-                if(kal_instance == null)
-                {
-                    lock (lockObj)
-                    {
-                        if (kal_instance == null)
-                        {
-                            kal_instance = new Kalkulator();
-                        }
-                    }
-                }
-                return kal_instance;
-            }
+            var kalkulatorTrapez = new KalkulatoryCalek();
+            kal_factory = new KalkulatorFactory(kalkulatorTrapez);
         }
-
-        public (List<(int, double)>, bool) ParallelForKal(ParametryDoCalki parametry, IFunkcja funkcja) // kalkulator parallel for 
+        
+        public (List<(int, double)>, bool) ObliczCalke(string metoda,ParametryDoCalki parametry, IFunkcja funkcja)
         {
             Console.Write("Naciśnij Q, żeby anulować");
             Thread.Sleep(1000);
 
-            var (wynikicalek, przerwano) = KalTra.metodaTrapezow(parametry, FunkcjaFactory.FactoryInstance.WybranaFunkcja);
-            wyniki = (wynikicalek, przerwano);
-            return (wynikicalek,przerwano);
+            var metodaWielowatkowosci = kal_factory.GetMetoda(metoda);
+            wyniki = metodaWielowatkowosci(parametry, funkcja);
+            return wyniki;
         }
-        public void ThreadKal() { }
-        public void ThreadPoolKal() { }
+       
 
         public void Podsumowanie() // wyswietla podsumowanie obliczen
         {
