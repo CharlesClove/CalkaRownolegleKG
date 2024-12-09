@@ -1,23 +1,25 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Runtime.Serialization;
 using System.Text;
 using System.Threading.Tasks;
 using CalkaRownolegleKG.Interfejsy;
+
 
 namespace CalkaRownolegleKG.Funkcje
 {
     public class Menu : IMenu
     {
         private static Menu menu_instance; //tworze instancje menu 
-        private Menu() {}
+        public Menu() {}
         private static readonly object lockObj = new object();
-
+        
         public static Menu MenuInstance // wywołuje instancje aby nie podawac obiektu, tylko stworzyl sie tutaj
         {
             get
             {
-                if(menu_instance == null)
+                if (menu_instance == null)
                 {
                     lock (lockObj)
                     {
@@ -30,13 +32,16 @@ namespace CalkaRownolegleKG.Funkcje
                 return menu_instance;
             }
         }
+        //public static Menu MenuInstance { get;  } = new Menu();
+
         private readonly List<string> opcjeMenu = new()
         {
             "1. Funkcja y= 2x + 2x^2 ",
             "2. Funkcja y= 2x^2 +3 ",
             "3. Funkcja y= 3x^2 + 2x - 3",
             "4. Funkcja y=3 * Math.Pow(x, 5) + 2 * x - 3 \t[Nowo dodana]",
-            "0. Wyjście"
+            "",
+            "0. Powrot"
         };
         
         public void ShowMenu() //main menu apki
@@ -56,6 +61,8 @@ namespace CalkaRownolegleKG.Funkcje
             "1. Parallel",
             "2. Thread",
             "3. ThreadPool",
+            "4. Task",
+            "",
             "0. Wyjście"
         };
         public void ShowMethod() 

@@ -12,6 +12,7 @@ namespace CalkaRownolegleKG.Kalkulatory
         public StopLoop()
         {
             _cts = new CancellationTokenSource();
+            
         }
         public CancellationToken Token { get { return _cts.Token; } }
         public void Stop() { _cts.Cancel(); }
@@ -24,5 +25,7 @@ namespace CalkaRownolegleKG.Kalkulatory
                 _cts = new CancellationTokenSource();
             }
         }
+
+        
     }
 }

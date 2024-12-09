@@ -35,6 +35,7 @@ namespace CalkaRownolegleKG.Funkcje
             {"2", new Funkcja2() },
             {"3", new Funkcja3() },
             {"4", new Funkcja4() },
+            
         };
         public static IFunkcja GetFunkcja(string choice)
         {
@@ -48,10 +49,9 @@ namespace CalkaRownolegleKG.Funkcje
         private string funkcjaName;
         public IFunkcja WybranaFunkcja => funkcja;
         public string FunkcjaName => funkcjaName;
+
         public void ChoicePass(string choice)
         {
-            if (choice == "0") { Environment.Exit(0); };
-
             try
             {
                 funkcja = FunkcjaFactory.GetFunkcja(choice);

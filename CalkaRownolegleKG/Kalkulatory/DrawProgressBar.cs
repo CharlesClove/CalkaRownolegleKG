@@ -24,17 +24,19 @@
                 {
                     int consoleRow = Math.Min(taskId, Console.WindowHeight - 1);
                     Console.SetCursorPosition(0, consoleRow);
-                    
-                    Console.Write($"\nTask {taskId + 1}/{totalTasks}: [");
-                    Console.Write(new string('#', filledWidth));
-                    Console.Write(new string(' ', progressWidth - filledWidth));
-                    Console.Write($"] {current}  /{total}");
-                    Console.Write($"] {progressProcenty}%");
-                    
-                    
+                    if (progressProcenty % 10 == 0)
+                    {
+                        Console.Write($"\nTask {taskId + 1}/{totalTasks}: [");
+                        Console.Write(new string('#', filledWidth));
+                        Console.Write(new string(' ', progressWidth - filledWidth));
+                        Console.Write($"] {current}  /{total}");
+                        Console.Write($"] {progressProcenty}%");
 
 
-                   Thread.Sleep(200);
+
+
+                        Thread.Sleep(200);
+                    }
                     
                 }
                 

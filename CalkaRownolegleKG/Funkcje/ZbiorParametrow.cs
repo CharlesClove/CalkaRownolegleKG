@@ -16,39 +16,27 @@ namespace CalkaRownolegleKG.Funkcje
             parametry = new ParametryDoCalki();
         }
         private static readonly object lockObj = new object();
-        public static ZbiorParametrow ZbiorInstance
-        {
-            get
-            {
-                if(zbiorParametrow_instance == null)
-                {
-                    lock (lockObj)
-                    {
-                        if (zbiorParametrow_instance == null)
-                        {
-                            zbiorParametrow_instance = new ZbiorParametrow();
-                        }
-                    }
-                }
-                return zbiorParametrow_instance;
-            }
-        }
+        public static ZbiorParametrow ZbiorInstance { get; } = new ZbiorParametrow();
+        
         public void ZbierzParametry()
         {
             parametry.ZakresyCalki.Clear();
             Console.WriteLine("\nPodaj ilość podziałów [ile całek chcesz obliczyć]: ");
             //parametry.podzialy = int.Parse(Console.ReadLine());
-            parametry.podzialy = 3
-                ;
+            parametry.podzialy = 3;
+
             for (int i = 0; i < parametry.podzialy; i++)
             {
                 Console.WriteLine($"\nPodaj zakresy {i + 1} (format: [Początek całkowania,Koniec całkowania]  )");
                 var wpisane_zakresy = Console.ReadLine().Split(new[] { ',', ' ' },
                                                                StringSplitOptions.RemoveEmptyEntries);
+
                 int x = int.Parse(wpisane_zakresy[0]);
                 int y = int.Parse(wpisane_zakresy[1]);
                 //int iloscprzedzialow = int.Parse(wpisane_zakresy[2]);
-                parametry.ZakresyCalki.Add(new Tuple<int, int>(x, y));
+
+                parametry.ZakresyCalki.Add((x,y));
+
             }
             Console.Clear();
             
